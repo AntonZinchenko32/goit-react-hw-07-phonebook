@@ -27,7 +27,7 @@ const ContactForm = () => {
 
     const form = evt.currentTarget;
 
-    dispatch(addContact([name, phone]));
+    dispatch(addContact({ name, phone }));
 
     setName('');
     setPhone('');

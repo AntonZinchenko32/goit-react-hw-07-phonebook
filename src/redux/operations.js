@@ -5,8 +5,7 @@ export const fetchContacts = createAsyncThunk('contacts/fetchAll', () =>
   fetchAll()
 );
 
-export const addContact = createAsyncThunk('contacts/addContact', contact => {
-  const [name, phone] = contact;
+export const addContact = createAsyncThunk('contacts/addContact', ({name, phone}) => {
   addItem(name, phone);
 });
 
