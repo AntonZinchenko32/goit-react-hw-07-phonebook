@@ -8,8 +8,8 @@ export const fetchAll = async () => {
   return data;
 };
 
-export const addItem = async (name, number) => {
-  const {data} = await axios.post('/contacts', {name, number});
+export const addItem = async (name, phone) => {
+  const {data} = await axios.post('/contacts', {name, phone});
   return data;
 };
 

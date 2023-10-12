@@ -8,18 +8,18 @@ import css from './ContactForm.module.css';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const { form, inputStyled, submitButton } = css;
 
   const nameInputId = nanoid();
-  const numberInputId = nanoid();
+  const phoneInputId = nanoid();
 
   const dispatch = useDispatch();
 
   const handleChange = evt => {
     if (evt.target.name === 'name') setName(evt.target.value);
-    else setNumber(evt.target.value);
+    else setPhone(evt.target.value);
   };
 
   const handleSubmit = evt => {
@@ -27,10 +27,10 @@ const ContactForm = () => {
 
     const form = evt.currentTarget;
 
-    dispatch(addContact(name, number));
+    dispatch(addContact([name, phone]));
 
     setName('');
-    setNumber('');
+    setPhone('');
 
     form.reset();
   };
@@ -49,14 +49,14 @@ const ContactForm = () => {
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
       />
-      <label htmlFor={numberInputId}>Number</label>
+      <label htmlFor={phoneInputId}>Phone Number</label>
       <input
-        id={numberInputId}
+        id={phoneInputId}
         onChange={handleChange}
         className={inputStyled}
         type="tel"
-        name="number"
-        value={number}
+        name="phone"
+        value={phone}
         pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
