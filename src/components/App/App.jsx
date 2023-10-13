@@ -1,11 +1,15 @@
+// Components
 import ContactForm from '../ContactForm/ContactForm';
 import Filter from '../Filter/Filter';
 import ContactList from '../ContactList/ContactList';
 import { Loader } from 'components/Loader/Loader';
+// redux
 import { fetchContacts } from 'redux/operations';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectError, selectIsLoading } from 'redux/selectors';
+
 import { useEffect } from 'react';
+
 import css from './App.module.css';
 
 export const App = () => {
