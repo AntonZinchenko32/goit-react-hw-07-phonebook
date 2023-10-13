@@ -1,5 +1,4 @@
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
 // redux
 import { selectContacts } from 'redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,9 +7,6 @@ import { addContact, fetchContacts } from 'redux/operations';
 import css from './ContactForm.module.css';
 
 const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-
   const contactsList = useSelector(selectContacts);
 
   const { form, inputStyled, submitButton } = css;
@@ -20,11 +16,7 @@ const ContactForm = () => {
 
   const dispatch = useDispatch();
 
-  const handleChange = evt => {
-    if (evt.target.name === 'name') setName(evt.target.value);
-    else setPhone(evt.target.value);
-  };
-
+  // Асинхронан функція для перевірки того, чи вже немає в масиві контактів контакту з іменем що намагається додати користувач
   const handleCheck = async (contacts, contactData) => {
     const { name, phone } = contactData;
     const gotMatch = contacts.find(contact => {
@@ -42,10 +34,16 @@ const ContactForm = () => {
   const handleSubmit = evt => {
     evt.preventDefault();
 
+    const form = evt.currentTarget;
+
+    const { nameInput, phoneInput } = evt.currentTarget.elements;
+
+    const name = nameInput.value.trim();
+    const phone = phoneInput.value.trim();
+
     handleCheck(contactsList, { name, phone });
 
-    setName('');
-    setPhone('');
+    form.reset();
   };
 
   return (
@@ -53,11 +51,9 @@ const ContactForm = () => {
       <label htmlFor={nameInputId}>Name</label>
       <input
         id={nameInputId}
-        onChange={handleChange}
         className={inputStyled}
         type="text"
-        name="name"
-        value={name}
+        name="nameInput"
         pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
@@ -65,11 +61,9 @@ const ContactForm = () => {
       <label htmlFor={phoneInputId}>Phone Number</label>
       <input
         id={phoneInputId}
-        onChange={handleChange}
         className={inputStyled}
         type="tel"
-        name="phone"
-        value={phone}
+        name="phoneInput"
         pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
