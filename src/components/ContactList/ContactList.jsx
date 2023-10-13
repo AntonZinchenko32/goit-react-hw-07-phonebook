@@ -4,7 +4,6 @@ import css from './ContactList.module.css';
 import ContactItem from 'components/ContactItem/ContactItem';
 
 const getVisibleContacts = (contacts, filterQuery) => {
-  // console.log(contacts);
   if (filterQuery === '') return contacts;
   else {
     const filtredContacts = contacts.filter(contact =>
