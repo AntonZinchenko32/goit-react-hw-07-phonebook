@@ -16,7 +16,6 @@ const ContactForm = () => {
 
   const dispatch = useDispatch();
 
-  // Асинхронан функція для перевірки того, чи вже немає в масиві контактів контакту з іменем що намагається додати користувач
   const handleCheck = async (contacts, contactData) => {
     const { name, phone } = contactData;
     const gotMatch = contacts.find(contact => {
