@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import { useState } from 'react';
 // redux
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/operations';
+import { addContact, fetchContacts } from 'redux/operations';
 
 import css from './ContactForm.module.css';
 
@@ -22,12 +22,13 @@ const ContactForm = () => {
     else setPhone(evt.target.value);
   };
 
-  const handleSubmit = evt => {
+  const handleSubmit = async evt => {
     evt.preventDefault();
 
     const form = evt.currentTarget;
 
-    dispatch(addContact({ name, phone }));
+    await dispatch(addContact({ name, phone }));
+    dispatch(fetchContacts());
 
     setName('');
     setPhone('');
