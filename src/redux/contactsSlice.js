@@ -5,7 +5,7 @@ import {
   handlePending,
   handleRejected,
 } from './helpers';
-import { fetchContacts} from './operations';
+import { fetchContacts } from './operations';
 
 const contactsInitialState = {
   items: [],
