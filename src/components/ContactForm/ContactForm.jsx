@@ -34,9 +34,6 @@ const ContactForm = () => {
     if (!gotMatch) {
       await dispatch(addContact({ name, phone }));
       dispatch(fetchContacts());
-
-      setName('');
-      setPhone('');
     } else {
       alert(`${name} already in list`);
     }
@@ -44,11 +41,11 @@ const ContactForm = () => {
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    const form = evt.currentTarget;
 
     handleCheck(contactsList, { name, phone });
 
-    form.reset();
+    setName('');
+    setPhone('');
   };
 
   return (
