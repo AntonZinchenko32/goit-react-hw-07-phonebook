@@ -1,7 +1,8 @@
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
 // redux
-import { useDispatch } from 'react-redux';
+import { selectContacts } from 'redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact, fetchContacts } from 'redux/operations';
 
 import css from './ContactForm.module.css';
@@ -9,6 +10,8 @@ import css from './ContactForm.module.css';
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+
+  const contactsList = useSelector(selectContacts);
 
   const { form, inputStyled, submitButton } = css;
 
@@ -22,16 +25,28 @@ const ContactForm = () => {
     else setPhone(evt.target.value);
   };
 
-  const handleSubmit = async evt => {
-    evt.preventDefault();
+  const handleCheck = async (contacts, contactData) => {
+    const { name, phone } = contactData;
+    const gotMatch = contacts.find(contact => {
+      return contact.name.toLowerCase() === name.toLowerCase();
+    });
 
+    if (!gotMatch) {
+      await dispatch(addContact({ name, phone }));
+      dispatch(fetchContacts());
+
+      setName('');
+      setPhone('');
+    } else {
+      alert(`${name} already in list`);
+    }
+  };
+
+  const handleSubmit = evt => {
+    evt.preventDefault();
     const form = evt.currentTarget;
 
-    await dispatch(addContact({ name, phone }));
-    dispatch(fetchContacts());
-
-    setName('');
-    setPhone('');
+    handleCheck(contactsList, { name, phone });
 
     form.reset();
   };
