@@ -8,7 +8,6 @@ const ContactItem = ({ name, id, phone }) => {
   const dispatch = useDispatch();
 
   const handleDelete = async () => {
-    console.log('click');
     await dispatch(deleteContact(id));
     dispatch(fetchContacts());
   };
